@@ -1,0 +1,114 @@
+.emoticon{
+    overflow: hidden;
+    width: 330px;
+    /*height: 30px;*/
+    /*margin-right: -1px;*/
+}
+.emoticon a{
+    float: left;
+    /*border-bottom: 1px solid #F0F0F0;*/
+    /*border-right: 1px solid #F0F0F0;*/
+    margin: 3px;
+    cursor: pointer;
+}
+[class*=emoticon-]{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    font-size: 0;
+    text-indent: -999em;
+    /*border:none;*/
+    background-image: url(../../../public/emoticon.png);
+    background-repeat: no-repeat;
+}
+.emoticon-cool{background-position-x: 0}
+.emoticon-fight{background-position-x: -30px}
+.emoticon-hush{background-position-x: -60px}
+.emoticon-laugh{background-position-x: -90px}
+.emoticon-laughAndCry{background-position-x: -120px}
+.emoticon-smile{background-position-x: -150px}
+.emoticon-tired{background-position-x: -180px}
+.emoticon-unhappy{background-position-x: -210px}
+.emoticon-wunai{background-position-x: -240px}
+.emoticon-sad{background-position-x: -270px}
+.emoticon-angry{background-position-x: -300px}
+.emoticon-naughty{background-position-x: -330px}
+.emoticon-asleep{background-position-x: -360px}
+.emoticon-cry{background-position-x: -390px}
+.emoticon-han{background-position-x: -420px}
+.emoticon-ignore{background-position-x: -450px}
+.emoticon-scared{background-position-x: -480px}
+.emoticon-question{background-position-x: -510px}
+.emoticon-sleep{background-position-x: -540px}
+.emoticon-handshake{background-position-x: -570px}
+.emoticon-enjoy{background-position-x: -600px}
+.emoticon-koubi{background-position-x: -630px}
+.emoticon-se{background-position-x: -660px}
+.emoticon-shuai{background-position-x: -690px}
+.emoticon-wuyu{background-position-x: -720px}
+.emoticon-yun{background-position-x: -750px}
+.emoticon-down{background-position-x: -780px}
+.emoticon-up{background-position-x: -810px}
+.emoticon-victory{background-position-x: -840px}
+.emoticon-wugu{background-position-x: -870px}
+.emoticon-qiu{background-position-x: -900px}
+.emoticon-yinxian{background-position-x: -930px}
+.emoticon-haixiu{background-position-x: -960px}
+.emoticon-huaixiao{background-position-x: -990px}
+.emoticon-kelian{background-position-x: -1020px}
+.emoticon-bigMouth{background-position-x: -1050px}
+.emoticon-amazed{background-position-x: -1080px}
+.emoticon-cryNotStop{background-position-x: -1110px}
+.emoticon-grievance{background-position-x: -1140px}
+.emoticon-pig{background-position-x: -1170px}
+.emoticon-doNotCare{background-position-x: -1200px}
+
+/*
+ * 小表情
+ */
+.icon-sm [class*=emoticon-]{
+    background-size: auto 15px;
+    width: 15px;
+    height: 15px;
+}
+.icon-sm .emoticon-cool{background-position-x: 0}
+.icon-sm .emoticon-fight{background-position-x: -15px}
+.icon-sm .emoticon-hush{background-position-x: -30px}
+.icon-sm .emoticon-laugh{background-position-x: -45px}
+.icon-sm .emoticon-laughAndCry{background-position-x: -60px}
+.icon-sm .emoticon-smile{background-position-x: -75px}
+.icon-sm .emoticon-tired{background-position-x: -90px}
+.icon-sm .emoticon-unhappy{background-position-x: -105px}
+.icon-sm .emoticon-wunai{background-position-x: -120px}
+.icon-sm .emoticon-sad{background-position-x: -135px}
+.icon-sm .emoticon-angry{background-position-x: -150px}
+.icon-sm .emoticon-naughty{background-position-x: -165px}
+.icon-sm .emoticon-asleep{background-position-x: -180px}
+.icon-sm .emoticon-cry{background-position-x: -195px}
+.icon-sm .emoticon-han{background-position-x: -210px}
+.icon-sm .emoticon-ignore{background-position-x: -225px}
+.icon-sm .emoticon-scared{background-position-x: -240px}
+.icon-sm .emoticon-question{background-position-x: -255px}
+.icon-sm .emoticon-sleep{background-position-x: -270px}
+.icon-sm .emoticon-handshake{background-position-x: -285px}
+.icon-sm .emoticon-enjoy{background-position-x: -300px}
+.icon-sm .emoticon-koubi{background-position-x: -315px}
+.icon-sm .emoticon-se{background-position-x: -330px}
+.icon-sm .emoticon-shuai{background-position-x: -345px}
+.icon-sm .emoticon-wuyu{background-position-x: -360px}
+.icon-sm .emoticon-yun{background-position-x: -375px}
+.icon-sm .emoticon-down{background-position-x: -390px}
+.icon-sm .emoticon-up{background-position-x: -405px}
+.icon-sm .emoticon-victory{background-position-x: -420px}
+.icon-sm .emoticon-wugu{background-position-x: -435px}
+.icon-sm .emoticon-qiu{background-position-x: -450px}
+.icon-sm .emoticon-yinxian{background-position-x: -465px}
+.icon-sm .emoticon-haixiu{background-position-x: -480px}
+.icon-sm .emoticon-huaixiao{background-position-x: -495px}
+.icon-sm .emoticon-kelian{background-position-x: -510px}
+.icon-sm .emoticon-bigMouth{background-position-x: -525px}
+.icon-sm .emoticon-amazed{background-position-x: -540px}
+.icon-sm .emoticon-cryNotStop{background-position-x: -555px}
+.icon-sm .emoticon-grievance{background-position-x: -570px}
+.icon-sm .emoticon-pig{background-position-x: -585px}
+.icon-sm .emoticon-doNotCare{background-position-x: -600px}

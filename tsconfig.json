@@ -1,0 +1,36 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "sourceMap": false,
+        "noImplicitAny": true,
+        "module": "ESNext",
+        "target": "es5",
+        "moduleResolution": "node",
+        "jsx": "react",
+        "allowJs":true,
+        "esModuleInterop": true,
+        "experimentalDecorators":true,
+        "lib": ["es5", "es2015", "dom", "scripthost"],
+        "baseUrl": ".",
+        "downlevelIteration":true,
+        "paths": {
+            "node_modules/*":["./node_modules"],
+            "components/*":["./src/components/*"],
+            "config/*":["./src/config/*"],
+            "action/*":["./src/action/*"],
+            "utils/*":["./src/utils/*"],
+            "appStore":["./src/ts/store.ts"],
+            "img/*":["./src/img/*"],
+            "less/*":["./src/less/*"],
+            "pages/*":["./src/ts/pages/*"],
+            "@ant-design/icons/lib/dist$": ["./src/icons.js"]
+        } 
+    },
+    "include": [
+        "./src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "./src/index.html"
+    ]
+}
