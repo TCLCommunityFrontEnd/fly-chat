@@ -8,6 +8,7 @@ export function objectAppend(obj0:TypeInterface._Object, obj:TypeInterface._Obje
     return obj0;
 }
 
+
 /**
  * 图片转表情码
  * @param content
@@ -152,5 +153,27 @@ export function isEmpty(val:any){
             return val==='';
         default:
             return false;
+    }
+}
+
+/**
+ * 时间格式化
+ * @param timestamp
+ * @returns {*} 返回 H:m、昨天、M月d日
+ */
+export function timeFormat(timestamp:string|Date){
+    if(timestamp){
+        var date=new Date(timestamp);
+        var now=new Date();
+        if(date.getFullYear()==now.getFullYear()&&date.getMonth()==now.getMonth()&&date.getDate()==now.getDate()){
+            //今天
+            return date.getHours()+':'+date.getMinutes();
+        }else if(new Date(date.getFullYear(), date.getMonth(), date.getDate()+1).getTime()==new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime()){
+            //昨天
+            return '昨天';
+        }
+        return (date.getMonth()+1)+'月'+date.getDate()+'日';
+    }else{
+        return '';
     }
 }

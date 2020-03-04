@@ -2,6 +2,7 @@ import {useSelector,useDispatch} from 'react-redux';
 import * as React from 'react';
 import EditableContent from '../../components/EditableContent';
 import ChatMsg from './ChatMsg';
+import {timeFormat} from 'utils/index';
 import action from '../../action/chat';
 import FaceSelect from '../FaceSelect';
 import { Icon,Spin,Button } from 'antd';
@@ -103,10 +104,11 @@ const ChatRight = (props:CompProps) => {
                             {
                                 msgList.length?msgList.map(function(msg:TypeInterface._Object, i:number){
                                     var timeSplitor=null;
+                                
                                     if(msg.time-currentTime>timeStep){
                                         timeSplitor=(
                                             <div className="chat-system-msg">
-                                                <small>{new Date(msg.time)}</small>
+                                                <small>{timeFormat(msg.time)}</small>
                                             </div>
                                         );
                                     }
@@ -152,9 +154,9 @@ const ChatRight = (props:CompProps) => {
                             </label>
                         </li>
                     </ul>
-                    <Button type="primary" onClick={handleSend} title="发送(Enter)，换行(Shift+Enter)" className="am-btn am-btn-secondary am-btn-sm am-margin-right-sm">
+                    {/* <Button type="primary" onClick={handleSend} title="发送(Enter)，换行(Shift+Enter)" className="am-btn am-btn-secondary am-btn-sm am-margin-right-sm">
                     <Icon type="caret-up" /> 发送
-                    </Button>
+                    </Button> */}
                 </div>
                 {
                     (currentObj.typeId===undefined||!onLine)&&<div className="chat-ft-cover"></div>

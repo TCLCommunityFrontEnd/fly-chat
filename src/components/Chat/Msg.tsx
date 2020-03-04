@@ -5,10 +5,11 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 
 interface CompProps {
-    content:string
+    content:string,
+    style?:any
 }
 const Msg = (props:CompProps) => {
-    let {content} = props;
+    let {content,style} = props;
     //消息类型：
     //1.普通消息（包括表情转义、超链接转义）
     //2.多媒体消息（相对地址：以“/cloud/chat/”开头，文件格式结尾）
@@ -36,7 +37,7 @@ const Msg = (props:CompProps) => {
     }
 
     return (
-        <div className="chat-msg-bd" dangerouslySetInnerHTML={{__html:content}}></div>
+        <div className="chat-msg-bd" style={{textAlign:'left'}} dangerouslySetInnerHTML={{__html:content}}></div>
     )
 }
 

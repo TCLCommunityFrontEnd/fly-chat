@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useSelector,useDispatch} from 'react-redux';
 //import notice from '../../utils/notice';
-import * as socket from '../../utils/socket';
+import * as socket from 'utils/socket.js';
 import dragChat from '../../hoc/dragChat';
 // import Icon from '../Icon';
 import {Icon} from 'antd';
@@ -12,15 +12,15 @@ import ChatRight from './ChatRight'
 import ChatRightPerson from './ChatRightPerson'
 import ChatRightGroup from './ChatRightGroup';
 import action from '../../action/chat';
+import {isEmpty} from 'utils/index';
 // var action=require('../../action/chat');
 var storage=require('../../utils/storage');
 require('./index.css');
 
 
 let Chat = () => {
-    const {show,orgList,groupList,tabId,chatList,currentObj} = useSelector((state:any)=>state.Chat);
+    let {show,orgList,groupList,tabId,chatList,currentObj,newMsg} = useSelector((state:any)=>state.Chat);
     const dispatch = useDispatch();
-
     function init(){
         //初始化聊天状态
         dispatch({type: 'CHAT_INIT'});
@@ -37,8 +37,11 @@ let Chat = () => {
     React.useEffect(()=>{
         init();
         //收到消息
-        socket.onMessage(onMsgReceive.bind(this));
-    },[])
+        socket.onMessage((data:any)=>_onMsgReceive(dispatch,data));
+    },[]);
+    React.useMemo(()=>{
+        !isEmpty(newMsg)&&onMsgReceive(newMsg)
+    },[newMsg]);
 
     /**
      * 全局发送消息的方法
@@ -59,7 +62,7 @@ let Chat = () => {
             };
 
             //保存到本地
-            // action.saveMsg(data);
+            action.saveMsg(data);
 
             let memberIds;
             //如果群聊的话会给发送人发送信息，但是单聊的话只给对方发送信息，因此单聊时需要自己补上
@@ -69,7 +72,7 @@ let Chat = () => {
                     dispatch({type:'CHAT_MSG_ADD', msg:data});
 
                     //更新左侧聊天列表
-                    // dispatch(action.refreshChatList(data));
+                    dispatch(action.refreshChatList(data));
                     break;
                 case 'ORG':
                     let org=orgList.find((o:TypeInterface._Object) => o.id==typeId);
@@ -90,7 +93,9 @@ let Chat = () => {
             });
         }
     }
-
+    function _onMsgReceive(dispatch:any,data:any){
+        dispatch({type:'CHAT_UNREAD_MSG_ADD',msg:data});
+    }
     /**
      * 接收服务器消息
      * @param data
@@ -101,25 +106,22 @@ let Chat = () => {
             typeId:data.typeId,
             userId:data.userId,
             content:data.content,
-            time:data.time,
             unread:1
         };
-
-        var currentObj=this.currentObj;
         //如果是处于当前聊天对象窗口，则直接显示消息
         if(currentObj.type==data.type&&currentObj.typeId==data.typeId){
-            this.onMsgAdd(data);
+            onMsgAdd(data);
 
-            if(this.show&&this.tabId==1) {
+            if(show&&tabId==1) {
                 msg.unread = 0;
             }
         }
 
         //更新左侧聊天列表
-        // dispatch(action.refreshChatList(msg));
+        dispatch(action.refreshChatList(msg));
 
         //不管怎样还是要把消息保存到数据库
-        // action.saveMsg(data);
+        action.saveMsg(data);
     }
     /**
      * 上屏一条消息
@@ -135,7 +137,7 @@ let Chat = () => {
      * @param content
      */
     function onMsgSend(content:string){
-        var obj=this.currentObj;
+        var obj=currentObj;
         //如果为空对象则为无效数据，避免插入到数据库中
         if(!obj.type){
             return false;
@@ -151,7 +153,7 @@ let Chat = () => {
 
         //切换到聊天TAB时，如果当前聊天对象有未读消息也要清除
         if(tabId==1&&currentObj.id){
-            dispatch(action.refreshChatList({id:this.currentObj.id,unread:0}));
+            dispatch(action.refreshChatList({id:currentObj.id,unread:0}));
         }
     }
 

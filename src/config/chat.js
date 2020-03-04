@@ -48,19 +48,19 @@ module.exports = (function(){
     };
 
     if(process.env.NODE_ENV === 'production'){
-        config.server=`${location.hostname}:3006`;
+        config.server=`${location.hostname}:3005`;
     }else{
-        //config.server='10.92.33.136:3006';
-        var ch='tmp';
-        if(location.search){
-            //假定location.search等于?ch=tmp
-            ch=location.search.slice(4);
-        }
-        if(ch=='web'){
-            config.server=`119.23.205.81:3006`;
-        }else {
-            config.server = `${location.hostname}:3006`;
-        }
+        config.server=`${location.hostname}:3005`;
+        // var ch='tmp';
+        // if(location.search){
+        //     //假定location.search等于?ch=tmp
+        //     ch=location.search.slice(4);
+        // }
+        // if(ch=='web'){
+        //     config.server=`119.23.205.81:3006`;
+        // }else {
+        //     config.server = `${location.hostname}:3006`;
+        // }
     }
 
     return config;

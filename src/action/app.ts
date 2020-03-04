@@ -1,5 +1,6 @@
 import Axios from 'utils/axios';
 import {devBaseUrls,proBaseUrls} from 'config/api';
+import * as socket from 'utils/socket.js';
 let storage=require('../utils/storage');
 
 let action:TypeInterface._Object = {};
@@ -9,6 +10,8 @@ const appOpts = {
 }
 
 action.getLoginUserInfo = () => (dispatch:any) => {
+    //连接socket
+    socket.connect();
     Axios.get('/user/loginInfo.do', {},appOpts).then((data:any)=>{
         //成功
         var userInfo={

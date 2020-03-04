@@ -1,37 +1,13 @@
 import * as React from 'react';
-// import {connect} from 'react-redux';
 import {useSelector,useDispatch} from 'react-redux'; 
-import {decodeFace} from '../../utils';
+import {decodeFace,timeFormat} from 'utils/index';
 import {Avatar,Input, Icon} from 'antd';
 import ContextMenu from '../ContextMenu';
 import action from '../../action/chat';
 const {useState} = React;
 var storage=require('../../utils/storage');
-// var ContextMenu=require('../../components/ContextMenu');
-// var action=require('../../action/chat');
-// var Avatar=require('../Avatar');
 
-/**
- * 时间格式化
- * @param timestamp
- * @returns {*} 返回 H:m、昨天、M月d日
- */
-function timeFormat(timestamp:string|Date){
-    if(timestamp){
-        var date=new Date(timestamp);
-        var now=new Date();
-        if(date.getFullYear()==now.getFullYear()&&date.getMonth()==now.getMonth()&&date.getDate()==now.getDate()){
-            //今天
-            return date.getHours()+':'+date.getMinutes();
-        }else if(new Date(date.getFullYear(), date.getMonth(), date.getDate()+1).getTime()==new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime()){
-            //昨天
-            return '昨天';
-        }
-        return (date.getMonth()+1)+'月'+date.getDate()+'日';
-    }else{
-        return '';
-    }
-}
+
 
 const ChatLeft = () => {
     const {orgMap,groupMap,currentObj,chatList} = useSelector((state:any)=>state.Chat);
@@ -60,6 +36,7 @@ const ChatLeft = () => {
      */
     function handleContextMenuClose(){
         setShowContextMenu(false);
+        // onItemDelete(chatId);
     }
      /**
      * 删除聊天
@@ -76,11 +53,11 @@ const ChatLeft = () => {
      * @param obj 用户或组
      */
     function onItemSelect(obj:any){
-        // dispatch(action.changeChatObject(obj));
+        dispatch(action.changeChatObject(obj));
 
         //清除该聊天对象的未读消息
         if(chatList.length) {
-            // dispatch(action.refreshChatList({id:obj.id,unread:0}));
+            dispatch(action.refreshChatList({id:obj.id,unread:0}));
         }
     }
     /**
@@ -88,7 +65,7 @@ const ChatLeft = () => {
      * @param chatId 即type+typeId
      */
     function onItemDelete(chatId:number){
-        // dispatch(action.deleteChat(chatId));
+        dispatch(action.deleteChat(chatId));
     }
 
     var userMap=storage.getUserMap();

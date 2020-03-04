@@ -77,6 +77,9 @@
     display: inline-block;
     margin-left: 10px;
     width: 230px;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
 }
 .chat-search-group>input{
     padding: 4px 5px;
@@ -111,7 +114,7 @@
 }
 .chat-list-item{
     position: relative;
-    padding:5px 1rem;
+    padding:5px .8rem;
     color: black;
     display: flex;
     align-items: center;
@@ -133,10 +136,15 @@
     line-height: 1.2;
     padding-top: 5px;
     text-align: left;
+    width: calc(100% - 60px)
 }
 .chat-list-item .after-avatar .recent{
     color: #999;
     font-size: .9em;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
 }
 .chat-list-item .chat-btn-badge{
     left:2px;
@@ -180,6 +188,12 @@
     background-color: white;
     cursor: move;
 }
+.chat-title{
+    color:rgba(0, 0, 0, .7);
+    font-size: 16px;
+    position: relative;
+    top: -3px;
+}
 .chat-close{
     padding:0 10px;
     color: #666;
@@ -221,6 +235,7 @@
     width: 180px;
 }
 .chat-system-msg{
+    font-size: 16px;
     text-align: center;
 }
 .chat-system-msg>small{
@@ -234,6 +249,8 @@
     margin:6px 0;
 }
 .chat-msg-bd{
+    font-size: 14px;
+    color: black;
     padding: 6px 10px;
     max-width: 70%;
     border-radius: 5px;
@@ -336,11 +353,14 @@
     background: rgba(255,255,255,.5);
 }
 .chat-input{
-    height: 62px;
+    height: 72px;
     line-height: 1.2;
     padding: 5px 10px;
     outline: none;
     overflow-y: auto;
+    color:rgba(0,0,0,.7);
+    text-align: left;
+    font-size: 14px;
 }
 .chat-actions{
     position: relative;
@@ -355,7 +375,7 @@
 }
 .chat-action{
     display: flex;
-    margin-top: 12px;
+    margin-top: 2px;
 }
 .chat-action>li{
     display: inline-block;

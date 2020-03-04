@@ -22,7 +22,9 @@ var defaultState:TypeInterface._Object={
     personSearchKey:'',
     groupSearchKey:'',
     msgLoading:false,
-    msgList:[] //右侧聊天消息
+    msgList:[], //右侧聊天消息
+    // unReadMsgs:[], //未读消息
+    newMsg:{}
 };
 export default (state:any, action:any)=>{
     //var newState;
@@ -187,6 +189,18 @@ export default (state:any, action:any)=>{
             break;
         case 'CHAT_MSG_ADD':
             state.msgList.push(action.msg);
+            break;
+        case 'CHAT_UNREAD_MSG_ADD':
+            let newState:TypeInterface._Object = {};
+            // newState.unReadMsgs = state.unReadMsgs.concat([action.msg]);
+            newState.newMsg = action.msg;
+            return objectAppend(newState,state);
+            // state.unReadMsgs = state.unReadMsgs.concat([action.msg]);
+            // state.unReadMsgs.push(action.msg);
+            break;
+        case 'CHAT_UNREAD_MSG_DELETE':
+            const index = state.unReadMsgs.findIndex((o:any)=>o.time===action.timeStamp);
+            state.unReadMsgs.splice(index,1);
             break;
         default:return state||defaultState;
     }

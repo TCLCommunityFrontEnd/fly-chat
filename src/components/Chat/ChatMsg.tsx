@@ -23,8 +23,8 @@ class ChatMsg extends React.Component<CompProps> {
         const user=userMap[msg.userId];
         return (
             <div className={'chat-msg '+(msg.userId==userInfo.id?'right':'left')}>
-                <span>
-                    <Avatar src={user.avatar}/>
+                <span style={{display:'flex'}}>
+                    <Avatar src={msg.userId==userInfo.id?userInfo.avatar:user.avatar}/>
                 </span>
                 <Msg content={msg.content}/>
             </div>

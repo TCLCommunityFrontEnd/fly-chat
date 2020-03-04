@@ -44,6 +44,10 @@ export function send(data){
     socket.send(data);
 }
 
+export function emit(type,data){
+    socket.emit(type,data);
+}
+
 /**
  * 连接成功
  * @param listener

@@ -50,7 +50,7 @@ const FaceSelect = (props:CompProps) => {
         {
             config.emoticonNames.map(function(name:string, i:number){
                 return (
-                    <Menu.Item>
+                    <Menu.Item key={i}>
                     <a key={i} href="javascript:;" onClick={handleFaceClick} className={`emoticon-${name}`} title={name}/>
                     </Menu.Item>
                 )

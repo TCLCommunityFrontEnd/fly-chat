@@ -277,35 +277,35 @@ ActionObj.changeChatObject=function(obj){
  * @param data
  * @returns {Function}
  */
-// ActionObj.saveMsg=function(data){
-//     //data: ownerId, type, typeId, userId, content, time
-//     var userInfo=storage.getUserInfo();
+ActionObj.saveMsg=function(data){
+    //data: ownerId, type, typeId, userId, content, time
+    var userInfo=storage.getUserInfo();
 
-//     //插入一条数据
-//     db.add(db.TABLE_MSG, {
-//         ownerId:userInfo.id,
-//         type:data.type,
-//         typeId:+data.typeId,
-//         userId:+data.userId,
-//         content:data.content,
-//         time:data.time
-//     });
+    //插入一条数据
+    db.add(db.TABLE_MSG, {
+        ownerId:userInfo.id,
+        type:data.type,
+        typeId:+data.typeId,
+        userId:+data.userId,
+        content:data.content,
+        time:data.time
+    });
 
-//     //该用户已保存消息数量
-//     db.getCount(db.TABLE_MSG, function(count){
-//         //超出的条数
-//         var exceed=count-config.msgMaxCount;
-//         if(exceed>0){
-//             //把超出的具体记录查出来
-//             db.getList(db.TABLE_MSG, function(list){
-//                 //遍历删除
-//                 list.forEach(function(o){
-//                     db.del(db.TABLE_MSG, o.primaryKey);
-//                 });
-//             }, 'ownerId_type_typeId', IDBKeyRange.only([userInfo.id, data.type, +data.typeId]), exceed);
-//         }
-//     }, 'ownerId_type_typeId', IDBKeyRange.only([userInfo.id, data.type, +data.typeId]));
-// };
+    //该用户已保存消息数量
+    db.getCount(db.TABLE_MSG, function(count){
+        //超出的条数
+        var exceed=count-config.msgMaxCount;
+        if(exceed>0){
+            //把超出的具体记录查出来
+            db.getList(db.TABLE_MSG, function(list){
+                //遍历删除
+                list.forEach(function(o){
+                    db.del(db.TABLE_MSG, o.primaryKey);
+                });
+            }, 'ownerId_type_typeId', IDBKeyRange.only([userInfo.id, data.type, +data.typeId]), exceed);
+        }
+    }, 'ownerId_type_typeId', IDBKeyRange.only([userInfo.id, data.type, +data.typeId]));
+};
 
 /**
  * 删除聊天
