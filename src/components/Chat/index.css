@@ -48,12 +48,15 @@
     opacity: 0;
     top:0;
     right:0;
+    display: none;
 }
 .chat-menu{
     width: 50px;
     background: #3E3E40;
     color: #ddd;
     cursor: move;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
 }
 .chat-menu .list>li{
     text-align: center;
@@ -119,6 +122,7 @@
     display: flex;
     align-items: center;
     cursor: pointer;
+    border-bottom: 1px solid #d9d9d9;
 }
 .chat-list-item .avatar{
     float: left;
@@ -386,14 +390,30 @@
     cursor: pointer;
     color: #19A7F0;
 }
+.chat-group-members{
+    display: flex;
+    flex-wrap: wrap;
+}
 .chat-group-members>li{
     position: relative;
     display: inline-block;
-    width: 60px;
+    width: 80px;
     text-align: center;
     vertical-align: top;
     margin: 0 4px;
-    padding:5px 0;
+    padding:5px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.chat-group-members>li .member-name{
+    font-size:12px;
+    color:black;
+    width: 80px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    
 }
 .chat-group-members>li .avatar,.chat-group-members .add{
     width: 50px;

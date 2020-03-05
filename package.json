@@ -22,6 +22,7 @@
     "redux-thunk": "^2.3.0",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
+    "single-spa-react": "^2.10.2",
     "umi": "^2.8.18"
   },
   "devDependencies": {
@@ -37,6 +38,7 @@
     "cache-loader": "^4.1.0",
     "compression-webpack-plugin": "1.1.12",
     "copy-webpack-plugin": "5.0.4",
+    "clean-webpack-plugin": "0.1.19",
     "cross-env": "5.1.0",
     "css-loader": "1.0.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
@@ -66,8 +68,8 @@
     "webpack-merge": "4.1.5"
   },
   "scripts": {
-    "build": "rimraf dist/src && cross-env NODE_ENV=production webpack --config build/webpack.prod.js --profile",
-    "start": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.js --profile",
+    "build": "webpack --config ./webpack.prod.js --profile",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack.dev.js --profile",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

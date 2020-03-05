@@ -70,6 +70,7 @@ export default (ChatComponent:any) => {
             document.addEventListener("mousemove", dragMove, false);
             document.addEventListener("mouseup",dragStop, false);
             return function cleanup(){
+                console.log('aa')
                 document.getElementById('chatMenu').removeEventListener("mousedown", dragStart, false);
                 document.removeEventListener("mousedown", headerMouseDown, false);
                 document.removeEventListener("mousemove", dragMove, false);

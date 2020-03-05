@@ -23,12 +23,15 @@ const App = () => {
     }
   },[show])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <a onClick={handleShowState}>open chat</a>
-        <Chat/>
-      </header>
+    // <div className="App">
+    //   <header className="App-header">
+    //     {/* <img src={logo} className="App-logo" alt="logo" />
+    //     <a onClick={handleShowState}>open chat</a> */}
+    //     <Chat/>
+    //   </header>
+    // </div>
+    <div style={{fontSize:25}}>
+    <Chat/>
     </div>
   );
 }

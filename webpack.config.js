@@ -9,30 +9,17 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const path=require('path');
-const theme=require('../theme');
+const theme=require('./theme');
 const APP_NAME='fly-chat';
 
 // 生产环境
 var isProd = process.env.NODE_ENV === 'production';
 
 function pathResolve(projectPath){
-    return path.resolve(__dirname,'..' ,projectPath);
+    return path.resolve(__dirname,'.' ,projectPath);
 }
 
 var plugins = [
-    new HtmlWebpackPlugin({
-        title:APP_NAME,
-        minify: {
-            caseSensitive: false,             //是否大小写敏感
-            collapseBooleanAttributes: true, //是否简写boolean格式的属性如：disabled="disabled" 简写为disabled
-            collapseWhitespace: true         //是否去除空格
-        },
-        chunks:['app', 'vendor1'],
-        inject:true,
-        favicon:'./public/logo192.png',
-        template:'./public/index.html',
-        filename:'./index.html', //结合output.path,
-    }),
     // new HtmlWebpackPlugin({
     //     title:APP_NAME,
     //     minify: {
@@ -40,11 +27,11 @@ var plugins = [
     //         collapseBooleanAttributes: true, //是否简写boolean格式的属性如：disabled="disabled" 简写为disabled
     //         collapseWhitespace: true         //是否去除空格
     //     },
-    //     chunks:['login', 'vendor1'],
+    //     chunks:['app', 'vendor1'],
     //     inject:true,
-    //     favicon:'./src/img/Cloud_logo.png',
-    //     template:'./src/login.html',
-    //     filename:'./login.html', //结合output.path,
+    //     favicon:'./public/logo192.png',
+    //     template:'./public/index.html',
+    //     filename:'./index.html', //结合output.path,
     // }),
     new HappyPack({
         id: 'less',
@@ -148,21 +135,29 @@ if(process.env.npm_config_report){
   }
 
 module.exports = {
-    context: path.resolve(__dirname, '../'),
+    // context: path.resolve(__dirname, '../'),
     entry: {
-        app:['react-hot-loader/patch','./src/index'], //入口
-        // login:'./src/ts/login'
+        // app:['react-hot-loader/patch','./src/index'], //入口
+        main:pathResolve('src/main.js'),
+        store:pathResolve('src/store.ts')
     },
+    // output: {
+    //     //给require.ensure用；webpack-dev-server的网站名
+    //     publicPath:isProd ? './' : '/',
+    //     //js的发布路径,是相对于package.json文件而言
+    //     path: pathResolve('./dist/src'),
+    //     //对应与entry中要打包出来分文件
+    //     filename: isProd ? '[name].[chunkhash:8].js' : '[name].js',
+    //     //对应于非entry中但仍需要打包出来的文件，比如按需加载require,ensure
+    //     chunkFilename:isProd ? '[name].chunk.[chunkhash:8].js' : '[name].chunk.js'
+    // },
     output: {
-        //给require.ensure用；webpack-dev-server的网站名
-        publicPath:isProd ? './' : '/',
-        //js的发布路径,是相对于package.json文件而言
-        path: pathResolve('./dist/src'),
-        //对应与entry中要打包出来分文件
-        filename: isProd ? '[name].[chunkhash:8].js' : '[name].js',
-        //对应于非entry中但仍需要打包出来的文件，比如按需加载require,ensure
-        chunkFilename:isProd ? '[name].chunk.[chunkhash:8].js' : '[name].chunk.js'
-    },
+        filename: isProd?'[name].[chunkhash:8].chat.js':'[name].chat.js',
+        chunkFilename:isProd?'[name].[chunkhash:8].chunk.js' :'[name].chunk.js',
+        library: 'chat',
+        libraryTarget: 'amd',
+        path: pathResolve('build/src'),
+      },
     resolve: {
         extensions: ['.js', '.less','.ts','.tsx','.json'],//在这里指定所有拓展名，否则会找不到对应模块[
         alias:{
@@ -174,10 +169,18 @@ module.exports = {
             })
         ]
     },
-    externals:{
-        moment:'moment',
+    externals:[
+        /^@portal\/*/,
+        /^lodash$/,
+        /^single-spa$/,
+        /^react$/,
+        /^react\/lib.*/,
+        /^react-dom$/,
+        /.*react-dom.*/,
+        /^moment$/
+        // moment:'moment',
         // mockjs:'Mock',
-    },
+    ],
     mode: 'production',
     
     module:{

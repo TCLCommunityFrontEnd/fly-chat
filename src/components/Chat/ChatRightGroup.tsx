@@ -137,7 +137,7 @@ const ChatRightGroup = () => {
                                     return (
                                         <li key={i}>
                                             <Avatar src={user.avatar} shape="square"/>
-                                            <div style={{fontSize:16,color:'black'}}>{user.name}</div>
+                                            <div className='member-name'>{user.name}</div>
                                             {
                                                 group.type!='ORG'
                                                     ?(group.manager==userId

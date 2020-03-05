@@ -50,7 +50,7 @@ let Chat = () => {
      * @param content
      */
     function sendMsg(type:string, typeId:number, content:string){
-        if(type&&typeId) {
+        if(type&&!isEmpty(typeId)) {
             var userInfo = storage.getUserInfo();
 
             var data = {
@@ -87,7 +87,8 @@ let Chat = () => {
             //发送到服务器，ids发给多个人才用到
             socket.send({
                 type: type,
-                id: typeId,
+                sendId:userInfo.id,
+                recvId: typeId,
                 ids: memberIds,
                 content: content
             });

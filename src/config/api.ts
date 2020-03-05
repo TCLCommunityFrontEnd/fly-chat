@@ -2,11 +2,11 @@ import CONST from './const';
 const proBaseUrl = 'http://localhost:3011';
 const devBaseUrl:string = 'http://localhost:3011';
 const devBaseUrls:TypeInterface._Object = {
-    baseUrl1:'https://www.test-teye.com/api',
+    baseUrl1:'https://cms.tct-rom.com',
     baseUrl2:'http://localhost:3011',
 }
 const proBaseUrls:TypeInterface._Object = {
-    baseUrl1:'https://www.test-teye.com/api',
+    baseUrl1:'https://cms.tct-rom.com',
     baseUrl2:'http://localhost:3011',
 }
 

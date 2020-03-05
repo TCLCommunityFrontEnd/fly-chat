@@ -1,12 +1,14 @@
 /* eslint-env node */
 const CompressionPlugin = require('compression-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 
 const config = require('./webpack.config.js');
 const webpack = require('webpack');
 
 const plugins = [
+    new CleanWebpackPlugin(['build/src']),
     new webpack.optimize.AggressiveMergingPlugin(),
     new CompressionPlugin({
         filename: '[path].gz[query]', //目标资源名称。[file] 会被替换成原资源。[path] 会被替换成原资源路径，[query] 替换成原查询字符串
@@ -28,20 +30,20 @@ plugins.forEach(function(plugin){
 
 
 config.mode = 'production';
-config.optimization = {
-        splitChunks:{
-            chunks:'all',
-            cacheGroups:{
-                commons: {
-					chunks: "async",
-					minChunks: 5, // 开发阶段选用小值加快编译速度，生产阶段使用大值减小包大小
-					maxInitialRequests: 5, // The default limit is too small to showcase the effect
-					minSize: 0 // This is example is too small to create commons chunks
-                },
-            }
-        },
-        runtimeChunk: "single"
-    },
+// config.optimization = {
+//         splitChunks:{
+//             chunks:'all',
+//             cacheGroups:{
+//                 commons: {
+// 					chunks: "async",
+// 					minChunks: 5, // 开发阶段选用小值加快编译速度，生产阶段使用大值减小包大小
+// 					maxInitialRequests: 5, // The default limit is too small to showcase the effect
+// 					minSize: 0 // This is example is too small to create commons chunks
+//                 },
+//             }
+//         },
+//         runtimeChunk: "single"
+//     },
 
 module.exports = config;
 
