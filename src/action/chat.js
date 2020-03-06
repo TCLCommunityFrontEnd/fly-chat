@@ -9,6 +9,7 @@ var storage=require('utils/storage.js');
 //var history=require('../history');
 //var store=require('../store');
 var config=require('../config/chat');
+import * as socket from 'utils/socket.js';
 import {devBaseUrls,proBaseUrls} from 'config/api';
 var ActionObj={};
 

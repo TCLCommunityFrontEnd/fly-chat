@@ -1,5 +1,6 @@
 var io=require('socket.io-client');
 var config=require('../config/chat');
+let storage=require('./storage');
 
 let socket=null;
 let messageEventList=[];
@@ -8,7 +9,7 @@ let broadcastEventList=[];
 /**
  * 连接服务器
  */
-export function connect(){
+export function connect(dispatch){
     socket = io.connect(config.server);
 
     socket.on('message', (data) => {
@@ -22,6 +23,16 @@ export function connect(){
             listener(data);
         });
     });
+
+    socket.on('server-bind-user',()=>{
+        const userInfo = storage.getUserInfo();
+        register(userInfo.id,userInfo.name);
+    });
+
+    socket.on('server-refresh-user-status',(data)=>{
+        console.log('status',data);
+        dispatch({type:'CHAT_ONLINE_LIST',list:data});
+    })
 }
 
 /**

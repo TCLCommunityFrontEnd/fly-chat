@@ -3,38 +3,33 @@ import {devBaseUrls,proBaseUrls} from 'config/api';
 import * as socket from 'utils/socket.js';
 import API from 'config/const';
 let storage=require('../utils/storage');
+import md5 from 'md5';
+import Identicon from 'identicon.js';
 
 let action:TypeInterface._Object = {};
 const appOpts = {
     devBaseUrl:devBaseUrls.baseUrl1,
     proBaseUrl:proBaseUrls.baseUrl1
 }
-
+const avatarOpt = {
+    // foreground: [255, 255, 255, 255],               // rgba black
+    background: [255, 255, 255, 255],         // rgba white
+    margin: 0.2,                              // 20% margin
+    size: 128,                                // 420px square
+    format: 'png'                             // use SVG instead of PNG
+  };
 action.getLoginUserInfo = () => (dispatch:any) => {
-    // Axios.get('/user/loginInfo.do', {},appOpts).then((data:any)=>{
-    //     //成功
-    //     var userInfo={
-    //         id:data.uid,
-    //         name:data.username,
-    //         avatar:data.avatar||'https://avatars1.githubusercontent.com/u/15435074?s=60&v=4',
-    //         companyName:data.companyName||'TCL云创科技有限公司',
-    //         roleType:data.roles.map((o:any)=>o.name).join(',')
-    //     };
-
-    //     storage.setUserInfo(userInfo);
-    // });
-
     return Axios.get(API.USER_INFO_LOAD_FOR_USER,{},appOpts).then((data:any) => {
         var userInfo={
             id:data.uid,
             name:data.username,
-            avatar:data.avatar||'https://avatars1.githubusercontent.com/u/15435074?s=60&v=4',
+            avatar:data.avatar||'data:image/png;base64,'+new Identicon(md5(data.username),avatarOpt).toString(),
             companyName:data.companyName||'TCL云创科技有限公司',
             roleType:data.roles.map((o:any)=>o.name).join(',')
         };
         //连接socket
-        socket.connect();
-        socket.emit('setName',data.uid);
+        socket.connect(dispatch);
+        socket.register(data.uid,data.username);
         storage.setUserInfo(userInfo);
     });
 }
@@ -85,7 +80,7 @@ action.updateMapStorage = (callback:Function) => {
                     userMap[o.uid] = {
                         id: o.uid,
                         name: o.username,
-                        avatar:o.avatar||'https://avatars0.githubusercontent.com/u/53926282?s=60&v=4',
+                        avatar:o.avatar||'data:image/png;base64,'+new Identicon(md5(o.username),avatarOpt).toString(),
                         orgId: o.orgId || 0,
                         orgIds: getParentIdsByOrg(o.orgId || 0)
                     };

@@ -5,7 +5,7 @@ import ChatMsg from './ChatMsg';
 import {timeFormat} from 'utils/index';
 import action from '../../action/chat';
 import FaceSelect from '../FaceSelect';
-import { Icon,Spin,Button } from 'antd';
+import { Icon,Spin,Button,Badge } from 'antd';
 // var action=require('../../action/chat');
 // var FaceSelect=require('../../components/FaceSelect');
 
@@ -18,7 +18,7 @@ interface CompProps {
 
 const ChatRight = (props:CompProps) => {
     const dispatch = useDispatch();
-    const {currentObj,onLine,msgLoading,msgList} = useSelector((state:any)=>state.Chat);
+    const {currentObj,onLine,msgLoading,msgList,onlineList} = useSelector((state:any)=>state.Chat);
     const {onMsgSend} = props;
     let chatBodyRef:any = React.createRef();
     let contentRef:any = React.createRef();
@@ -86,16 +86,24 @@ const ChatRight = (props:CompProps) => {
     var timeStep=60*1000;//1分
     return (
         <div className="chat-right flex-grow-1">
-            {
-                !onLine?<div className="chat-offline am-alert am-alert-danger am-text-center"><i className="am-icon-chain-broken"/> 与服务器断开连接！</div>:null
-            }
             <div id="chatHeader" className="chat-hd no-select">
-                <span className="chat-title">{currentObj.name}</span>
-                <a href="javascript:;" onClick={onClose} className="chat-close am-fr"><Icon type="minus" style={{fontSize:20}}/></a>
+                <div className="chat-title">
+                    {/* <span className="chat-title-name">{currentObj.name}</span> */}
+                    <span className="chat-title-online-state">{
+                        onlineList.indexOf((currentObj.typeId+''))>-1? <Badge status="success" text={'在线'} />:<Badge status="error" text={'离线'}/>
+                    }</span>
+                </div>
+                <a href="javascript:;" onClick={onClose} className="chat-close am-fr"><Icon type="shrink" style={{fontSize:20}}/></a>
             </div>
+            {/* {
+                onLine?<div className="chat-offline am-alert am-alert-danger am-text-center"><i className="am-icon-chain-broken"/> 与服务器断开连接！</div>
+                :
+                null
+            } */}
             <div ref={chatBodyRef} className="chat-bd">
                 {
-                    msgLoading?(
+                    !onLine?<div className="chat-offline am-alert am-alert-danger am-text-center"><i className="am-icon-chain-broken"/> 与服务器断开连接！</div>
+                    :msgLoading?(
                         <div className="chat-loading">
                             <Icon type="loading" style={{ fontSize: 24 }} spin />
                         </div>

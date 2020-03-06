@@ -177,7 +177,8 @@ module.exports = {
         /^react\/lib.*/,
         /^react-dom$/,
         /.*react-dom.*/,
-        /^moment$/
+        /^moment$/,
+        /^md5$/,
         // moment:'moment',
         // mockjs:'Mock',
     ],

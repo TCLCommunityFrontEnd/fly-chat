@@ -1,4 +1,5 @@
 import {objectAppend} from '../../utils/index';
+import { List } from 'antd';
 var storage=require('../../utils/storage');
 /**
  * 每个容器组件对应一个reducer
@@ -24,7 +25,8 @@ var defaultState:TypeInterface._Object={
     msgLoading:false,
     msgList:[], //右侧聊天消息
     // unReadMsgs:[], //未读消息
-    newMsg:{}
+    newMsg:{},
+    onlineList:[]
 };
 export default (state:any, action:any)=>{
     //var newState;
@@ -40,9 +42,16 @@ export default (state:any, action:any)=>{
         case 'CHAT_CLOSE':
             state.show=false;
             break;
-        case 'CHAT_SERVER_STATE':
-            state.onLine=action.onLine;
+        case 'CHAT_ONLINE_LIST':
+            state.onlineList = action.list;
+            if(state.onlineList.indexOf(storage.getUserInfo().id+'')>-1)
+                state.onLine = true;
+            else
+                state.onLine = false;
             break;
+        // case 'CHAT_SERVER_STATE':
+        //     state.onLine=action.onLine;
+        //     break;
         case 'CHAT_TAB_CHANGE':
             state.tabId=action.tabId;
             break;
