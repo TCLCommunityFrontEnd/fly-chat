@@ -237,7 +237,13 @@ ActionObj.refreshChatList=function(msg){
         }else{
             chatList.push(msg);
         }
-
+        var unreadCount=0;
+        chatList.forEach(function(o){
+            if(o.unread>0){
+                unreadCount+=o.unread;
+            }
+        });
+        dispatch({type:'CHAT_UNREADMSG_CHANGE',unreadCount});
         dispatch({type:'CHAT_CHAT_LIST_CHANGE', list:chatList});
     }
 };

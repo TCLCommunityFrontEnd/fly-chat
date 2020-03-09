@@ -19,7 +19,7 @@ require('./index.css');
 
 
 let Chat = () => {
-    let {show,orgList,groupList,tabId,chatList,currentObj,newMsg} = useSelector((state:any)=>state.Chat);
+    let {show,orgList,groupList,tabId,chatList,currentObj,newMsg,unreadCount} = useSelector((state:any)=>state.Chat);
     const dispatch = useDispatch();
     function init(){
         //初始化聊天状态
@@ -174,12 +174,13 @@ let Chat = () => {
     }
 
     //计算未读消息总数
-    var unreadCount=0;
-    chatList.forEach(function(o:TypeInterface._Object){
-        if(o.unread>0){
-            unreadCount+=o.unread;
-        }
-    });
+    // var unreadCount=0;
+    // chatList.forEach(function(o:TypeInterface._Object){
+    //     if(o.unread>0){
+    //         unreadCount+=o.unread;
+    //     }
+    // });
+    
 
     return (
         <div 

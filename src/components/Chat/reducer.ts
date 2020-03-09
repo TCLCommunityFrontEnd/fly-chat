@@ -26,7 +26,8 @@ var defaultState:TypeInterface._Object={
     msgList:[], //右侧聊天消息
     // unReadMsgs:[], //未读消息
     newMsg:{},
-    onlineList:[]
+    onlineList:[],
+    unreadCount:0
 };
 export default (state:any, action:any)=>{
     //var newState;
@@ -41,6 +42,9 @@ export default (state:any, action:any)=>{
             break;
         case 'CHAT_CLOSE':
             state.show=false;
+            break;
+        case 'CHAT_UNREADMSG_CHANGE':
+            state.unreadCount = action.unreadCount;
             break;
         case 'CHAT_ONLINE_LIST':
             state.onlineList = action.list;
