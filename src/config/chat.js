@@ -48,7 +48,7 @@ module.exports = (function(){
     };
 
     if(process.env.NODE_ENV === 'production'){
-        config.server=`${location.hostname}:3012`;
+        config.server=`http://3.1.103.172:3012`;
     }else{
         config.server=`http://3.1.103.172:3012`;
         // config.server=`${location.hostname}:3012`;

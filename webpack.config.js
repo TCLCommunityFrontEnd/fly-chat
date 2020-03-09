@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+// const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HappyPack = require('happypack');
 const TSconfigPathsPlugin= require('tsconfig-paths-webpack-plugin');
 const tsImportPluginFactory = require('ts-import-plugin');
@@ -93,10 +93,10 @@ var plugins = [
     }),
     //为了重新获得类型检查，但会严重拖慢首次编译速度
     new ForkTsCheckerWebpackPlugin({ checkSyntacticErrors: true }),
-    new ExtractTextPlugin({
-        filename: '[name].[hash].css', //路径以及命名
-        allChunks:true
-    })
+    // new ExtractTextPlugin({
+    //     filename: '[name].[hash].css', //路径以及命名
+    //     allChunks:true
+    // })
 ]
 
 if(process.env.npm_config_report){
@@ -183,7 +183,6 @@ module.exports = {
         // mockjs:'Mock',
     ],
     mode: 'production',
-    
     module:{
         rules:[
             {
@@ -197,15 +196,15 @@ module.exports = {
                     // 注意：ts-loader 文档建议使用 cache-loader，但是这实际上会由于使用硬盘写入而减缓增量构建速度。
                     transpileOnly: true,//增量构建
                     experimentalWatchApi: true,
-                    getCustomTransformers:()=>({
-                        before:[
-                            tsImportPluginFactory({
-                                libraryName:'antd',
-                                libraryDirectory:'lib',
-                                style:true
-                            })
-                        ]
-                    })
+                    // getCustomTransformers:()=>({
+                    //     before:[
+                    //         tsImportPluginFactory({
+                    //             libraryName:'antd',
+                    //             libraryDirectory:'lib',
+                    //             style:true
+                    //         })
+                    //     ]
+                    // })
                 }
             },
             {test: /\.css$/, use:'happypack/loader?id=css'},
@@ -214,18 +213,16 @@ module.exports = {
             {
                 test: /\.less$/,
                 //这里使用happypack快2~3s
-                use:ExtractTextPlugin.extract({
-                    use:[
-                        {
-                            loader:'cache-loader',
-                            options:{
-                                cacheDirectory:pathResolve('.cache')
-                            }
-                        } ,
-                        'happypack/loader?id=less'
-                    ],
-                    fallback:'style-loader'
-                }),
+                use:[
+                    {loader:'style-loader'},
+                    {
+                        loader:'cache-loader',
+                        options:{
+                            cacheDirectory:pathResolve('.cache')
+                        }
+                    },
+                    'happypack/loader?id=less'
+                ],
                 include:[pathResolve('node_modules/antd'),pathResolve('src/less')]
             },
             {

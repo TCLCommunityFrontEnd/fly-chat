@@ -11,7 +11,7 @@ const appOpts = {
     devBaseUrl:devBaseUrls.baseUrl1,
     proBaseUrl:proBaseUrls.baseUrl1
 }
-const avatarOpt = {
+const avatarOpt:any = {
     // foreground: [255, 255, 255, 255],               // rgba black
     background: [255, 255, 255, 255],         // rgba white
     margin: 0.2,                              // 20% margin
