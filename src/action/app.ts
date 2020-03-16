@@ -5,6 +5,7 @@ import API from 'config/const';
 let storage=require('../utils/storage');
 import md5 from 'md5';
 import Identicon from 'identicon.js';
+import chatAction from './chat.js';
 
 let action:TypeInterface._Object = {};
 const appOpts = {
@@ -37,11 +38,16 @@ action.getLoginUserInfo = () => (dispatch:any) => {
 /**
  * 主要更新组织和用户本地缓存
  */
-action.updateMapStorage = (callback:Function) => {
+action.updateMapStorage = (callback:Function) => (dispatch:any) => {
     //须已登录
     const userInfo=storage.getUserInfo();
     if(userInfo) {
-        Axios.get('/company/org_staff.do', {}, appOpts).then((data:any)=>{
+        // Axios.get('/company/org_staff.do', {}, appOpts).then((data:any)=>{
+            const data = {
+                'orgs':[
+                    {'uid':1,'name':'TCL','desc':'TCL云创',pid:0},
+                ]
+            }
             //组织
             var orgMap:TypeInterface._Object = {0:{id:0, name:userInfo.companyName, pid:-1}};
             data.orgs.forEach(function (o:TypeInterface._Object) {
@@ -73,7 +79,6 @@ action.updateMapStorage = (callback:Function) => {
                 currentPage: 1,
                 pageSize: 10000,
             },appOpts).then((obj:any)=>{
-                
                 var userMap:TypeInterface._Object = {0:{'id':0,'avatar':'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K',
                 'name':'服务器','orgId':1},};
                 obj.list.forEach(function (o:TypeInterface._Object) {
@@ -86,12 +91,13 @@ action.updateMapStorage = (callback:Function) => {
                     };
                 });
                 storage.setUserMap(userMap);
-
+                dispatch(chatAction.loadPersonList());
+                dispatch(chatAction.loadOrgList());
                 if(typeof callback == 'function'){
                     callback();
                 }
             })
-        });
+        // });
     }
 };
 

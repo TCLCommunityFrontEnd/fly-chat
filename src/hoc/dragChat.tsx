@@ -30,7 +30,7 @@ export default (ChatComponent:any) => {
             }
         }
         function dragMove(e:any){
-            e.preventDefault();
+            // e.preventDefault();
             if (isDragging) {
                 translateX=e.pageX-originalX;
                 translateY=e.pageY-originalY;
@@ -39,7 +39,7 @@ export default (ChatComponent:any) => {
             }
         }
         function dragStop(e:any){
-            e.preventDefault();
+            // e.preventDefault();
             if (isDragging) {
                 removeClass(document.body, 'no-select');
                 removeClass(chatWindow, 'dragging');
@@ -66,13 +66,12 @@ export default (ChatComponent:any) => {
         React.useEffect(()=>{
             chatWindow=document.getElementById('chatWindow');
             document.getElementById('chatMenu').addEventListener("mousedown", dragStart, false);
-            document.addEventListener("mousedown", headerMouseDown, false);
-            document.addEventListener("mousemove", dragMove, false);
-            document.addEventListener("mouseup",dragStop, false);
+            // document.addEventListener("mousedown", headerMouseDown, false);
+            document.addEventListener("mousemove", dragMove, true);
+            document.addEventListener("mouseup",dragStop, true);
             return function cleanup(){
-                console.log('aa')
                 document.getElementById('chatMenu').removeEventListener("mousedown", dragStart, false);
-                document.removeEventListener("mousedown", headerMouseDown, false);
+                // document.removeEventListener("mousedown", headerMouseDown, false);
                 document.removeEventListener("mousemove", dragMove, false);
                 document.removeEventListener("mouseup", dragStop, false);
             }

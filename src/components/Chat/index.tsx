@@ -90,7 +90,8 @@ let Chat = () => {
                 sendId:userInfo.id,
                 recvId: typeId,
                 ids: memberIds,
-                content: content
+                content: content,
+                time:data.time
             });
         }
     }

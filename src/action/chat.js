@@ -102,19 +102,20 @@ ActionObj.loadGroupList=function(){
     return dispatch => {
         const userInfo=storage.getUserInfo();
         if(userInfo) {
-            Axios.get('/chat-group/myGroups.do', {loginId: userInfo.id}, chatOpts).then((list)=>{
-                //反序
-                list.reverse();
-                dispatch({
-                    type: 'CHAT_GROUP_LIST_DONE',
-                    list: list.map(function (group) {
-                        group.id = group.autoId;
-                        group.type = 'GROUP';
-                        group.key = 'GROUP_' + group.id;
-                        return group;
-                    })
-                });
-            });
+            // Axios.get('/chat-group/myGroups.do', {loginId: userInfo.id}, chatOpts).then((list)=>{
+            //     console.log('list',list)
+            //     //反序
+            //     list.reverse();
+            //     dispatch({
+            //         type: 'CHAT_GROUP_LIST_DONE',
+            //         list: list.map(function (group) {
+            //             group.id = group.autoId;
+            //             group.type = 'GROUP';
+            //             group.key = 'GROUP_' + group.id;
+            //             return group;
+            //         })
+            //     });
+            // });
         }
     }
 };
@@ -136,19 +137,19 @@ ActionObj.changeTab=function(tabId){
                 dispatch(ActionObj.loadGroupList());
             } else if (tabId == 1) { //默认聊天tab
                 //每次都需要同步群组名
-                Axios.get('/chat-group/myGroups.do', {loginId: userInfo.id}, function (list) {
-                    var map = {};
-                    list.forEach(function (o) {
-                        map[o.autoId] = {
-                            name: o.name,
-                            memberIds: o.memberIds
-                        };
-                    });
-                    dispatch({
-                        type: 'CHAT_GROUP_SYNC',
-                        groupMap: map
-                    });
-                });
+                // Axios.get('/chat-group/myGroups.do', {loginId: userInfo.id}, function (list) {
+                //     var map = {};
+                //     list.forEach(function (o) {
+                //         map[o.autoId] = {
+                //             name: o.name,
+                //             memberIds: o.memberIds
+                //         };
+                //     });
+                //     dispatch({
+                //         type: 'CHAT_GROUP_SYNC',
+                //         groupMap: map
+                //     });
+                // });
             }
         }
     }
@@ -320,6 +321,7 @@ ActionObj.saveMsg=function(data){
  * @returns {Function}
  */
 ActionObj.deleteChat=function(id){
+    console.log('chatid',id);
     return function (dispatch){
         var userInfo=storage.getUserInfo();
         var s=id.split('_');

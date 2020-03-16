@@ -50,8 +50,8 @@ module.exports = (function(){
     if(process.env.NODE_ENV === 'production'){
         config.server=`http://3.1.103.172:3012`;
     }else{
-        config.server=`http://3.1.103.172:3012`;
-        // config.server=`${location.hostname}:3012`;
+        // config.server=`http://3.1.103.172:3012`;
+        config.server=`${location.hostname}:3012`;
         // var ch='tmp';
         // if(location.search){
         //     //假定location.search等于?ch=tmp

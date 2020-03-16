@@ -1,9 +1,7 @@
 import * as React from 'react';
 import {useSelector,useDispatch} from 'react-redux';
-// import {connect} from 'react-redux';
 import {Avatar,Input} from 'antd';
 var storage=require('../../utils/storage');
-// var Avatar=require('../Avatar');
 
 const ChatLeftPerson = () => {
     let {personSelected:selectedId,personSearchKey:searchKey,personList} = useSelector((state:any)=>state.Chat);
@@ -23,7 +21,6 @@ const ChatLeftPerson = () => {
     var orgMap=storage.getOrgMap();
     //筛选联系人
     if(searchKey) {
-        console.log(searchKey)
         personList = personList.filter(function (user:any) {
             return ~user.name.toLowerCase().indexOf(searchKey.toLowerCase());
         });
@@ -32,7 +29,7 @@ const ChatLeftPerson = () => {
         <div className="chat-left">
             <div className="chat-search">
                 <div className="chat-search-group">
-                    <Input.Search/>
+                    <Input.Search onChange={onSearchChange} defaultValue={searchKey}/>
                     {/* <input type="search" className="am-form-field" onChange={onSearchChange} placeholder={`搜索当前${personList.length}位联系人`}/> */}
                     <i className="am-icon-search"/>
                 </div>

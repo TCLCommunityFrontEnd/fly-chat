@@ -11,8 +11,10 @@ const App = () => {
   const dispatch = useDispatch();
 
   React.useEffect(()=>{
-    dispatch(action.getLoginUserInfo());
-    action.updateMapStorage();
+    dispatch(action.getLoginUserInfo()).then(()=>{
+       dispatch(action.updateMapStorage());
+    });
+   
   },[])
 
   const handleShowState = useCallback(()=>{

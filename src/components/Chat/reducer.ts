@@ -9,7 +9,7 @@ var storage=require('../../utils/storage');
 var defaultState:TypeInterface._Object={
     show:false,
     onLine:true,
-    tabId:0, //1聊天，2通讯录，3组织/群组
+    tabId:1, //1聊天，2通讯录，3组织/群组
     chatList:[], //左侧聊天列表。item格式：{id,type,typeId,userId,content,time,unread}
     personList:[], //左侧通讯录列表
     orgList:[], //左侧所属组织列表

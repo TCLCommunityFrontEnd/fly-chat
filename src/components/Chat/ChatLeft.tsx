@@ -1,12 +1,13 @@
 import * as React from 'react';
 import {useSelector,useDispatch} from 'react-redux'; 
 import {decodeFace,timeFormat} from 'utils/index';
-import {Avatar,Input, Icon} from 'antd';
+import {Avatar,Input, Icon,message} from 'antd';
 import ContextMenu from '../ContextMenu';
 import action from '../../action/chat';
 const {useState} = React;
 var storage=require('../../utils/storage');
 
+let chatId:any = 0;
 
 
 const ChatLeft = () => {
@@ -16,8 +17,6 @@ const ChatLeft = () => {
     let [showContextMenu,setShowContextMenu] = useState(false);
     let [x,setX] = useState(0);
     let [y,setY] = useState(0);
-
-    let chatId:number = 0;
 
     /**
      * 打开右键菜单
@@ -36,13 +35,17 @@ const ChatLeft = () => {
      */
     function handleContextMenuClose(){
         setShowContextMenu(false);
-        // onItemDelete(chatId);
     }
      /**
      * 删除聊天
      */
     function handleChatDelete(){
         handleContextMenuClose();
+        if(chatId==0){
+            message.warn('请选择要删除的会话');
+        }else{
+            onItemDelete(chatId);
+        }
         // if(confirm('确定删除该聊天？')){
         //     this.props.onItemDelete(chatId);
         // }
@@ -67,6 +70,12 @@ const ChatLeft = () => {
     function onItemDelete(chatId:number){
         dispatch(action.deleteChat(chatId));
     }
+    /**
+     * 搜索聊天记录
+     */
+    function onSearchChange(e:any){
+        // dispatch({type:'CHAT_PERSON_SEARCH', key:e.target.value});
+    }
 
     var userMap=storage.getUserMap();
     return (
@@ -77,7 +86,7 @@ const ChatLeft = () => {
             <div className="chat-search am-hide">
                 <div className="chat-search-group">
                     {/* <input type="search" className="am-form-field"/> */}
-                    <Input.Search/>
+                    <Input.Search onChange={onSearchChange}/>
                     <i className="am-icon-search"/>
                 </div>
             </div>
@@ -127,15 +136,17 @@ const ChatLeft = () => {
                             return (
                                 <li key={i}
                                     onClick={obj.id==currentObj.id?null:()=>onItemSelect(chatObj)}
-                                    onContextMenu={handleContextMenu.bind(this, obj.id)}
+                                    onContextMenu={(e)=>handleContextMenu(obj.id,e)}
                                     className={'chat-list-item overflow-hidden'+(obj.id==currentObj.id?' active':'')}
                                     >
                                     {avatar}
                                     {obj.unread>0?<span className="chat-btn-badge">{obj.unread>99?'99+':obj.unread}</span>:null}
                                     <div className="after-avatar">
                                         <span>{obj.name}</span>
-                                        <small className="am-fr">{timeFormat(obj.time)}</small>
-                                        <div className="recent am-text-truncate icon-sm" dangerouslySetInnerHTML={{__html:recentContent}}></div>
+                                        <div style={{display:'flex'}}>
+                                            <div className="recent am-text-truncate icon-sm" dangerouslySetInnerHTML={{__html:recentContent}}></div>
+                                            <small className="am-fr">{timeFormat(obj.time)}</small>
+                                        </div>
                                     </div>
                                 </li>
                             )
